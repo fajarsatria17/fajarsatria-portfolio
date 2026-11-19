@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="rriBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B132B" />
+      <stop offset="60%" stop-color="#0A1022" />
+      <stop offset="100%" stop-color="#060914" />
+    </linearGradient>
+    <linearGradient id="rriCard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#141D33" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0E1629" stop-opacity="0.9" />
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0066FF" />
+      <stop offset="100%" stop-color="#00D4FF" />
+    </linearGradient>
+    <pattern id="rriGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1E293B" stroke-width="0.5" stroke-opacity="0.35" />
+    </pattern>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="800" height="450" fill="url(#rriBg)" />
+  <rect width="800" height="450" fill="url(#rriGrid)" />
+
+  <!-- Ambient Radio Glow -->
+  <circle cx="680" cy="80" r="180" fill="#00D4FF" opacity="0.06" />
+
+  <!-- App Window Shell -->
+  <rect x="40" y="30" width="720" height="390" rx="12" fill="#0B1222" stroke="#1E293B" stroke-width="1.5" />
+
+  <!-- Header Window Controls -->
+  <rect x="40" y="30" width="720" height="42" rx="12" fill="#111A2E" />
+  <rect x="40" y="60" width="720" height="12" fill="#111A2E" />
+  <line x1="40" y1="72" x2="760" y2="72" stroke="#1E293B" stroke-width="1" />
+
+  <!-- Dots -->
+  <circle cx="65" cy="51" r="5" fill="#EF4444" opacity="0.8" />
+  <circle cx="82" cy="51" r="5" fill="#F59E0B" opacity="0.8" />
+  <circle cx="99" cy="51" r="5" fill="#10B981" opacity="0.8" />
+
+  <!-- Window Title -->
+  <text x="125" y="55" fill="#94A3B8" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">LPP RRI // ASSET &amp; INVENTORY REGISTRY (ILLUSTRATIVE)</text>
+  
+  <!-- Broadcast Telemetry Indicator -->
+  <rect x="615" y="43" width="125" height="18" rx="4" fill="#00D4FF" fill-opacity="0.1" stroke="#00D4FF" stroke-opacity="0.4" stroke-width="1" />
+  <path d="M 627 52 Q 629 48 631 52 Q 633 56 635 52" stroke="#00D4FF" stroke-width="1.5" fill="none" />
+  <text x="643" y="55" fill="#00D4FF" font-family="monospace" font-size="9" font-weight="bold">BROADCAST ASSETS</text>
+
+  <!-- Top Action Bar (Search & Filter) -->
+  <rect x="60" y="90" width="320" height="34" rx="6" fill="#131C30" stroke="#1E293B" stroke-width="1" />
+  <circle cx="80" cy="107" r="5" stroke="#64748B" stroke-width="1.5" fill="none" />
+  <line x1="84" y1="111" x2="89" y2="116" stroke="#64748B" stroke-width="1.5" stroke-linecap="round" />
+  <text x="98" y="111" fill="#64748B" font-family="monospace" font-size="10">Search asset by code, tag, unit...</text>
+
+  <!-- Filter & Add Buttons -->
+  <rect x="395" y="90" width="105" height="34" rx="6" fill="#131C30" stroke="#1E293B" stroke-width="1" />
+  <text x="412" y="111" fill="#94A3B8" font-family="monospace" font-size="10">Filter: Studio</text>
+  <path d="M 480 109 L 485 114 L 490 109" stroke="#94A3B8" stroke-width="1.5" fill="none" stroke-linecap="round" />
+
+  <rect x="630" y="90" width="110" height="34" rx="6" fill="url(#cyanGrad)" />
+  <text x="653" y="111" fill="#070B14" font-family="sans-serif" font-size="11" font-weight="bold">+ New Asset</text>
+
+  <!-- Stat Summary Metric Badges -->
+  <g transform="translate(60, 140)">
+    <!-- Metric 1: Total Registered -->
+    <rect x="0" y="0" width="210" height="60" rx="8" fill="url(#rriCard)" stroke="#1E293B" stroke-width="1" />
+    <text x="16" y="24" fill="#64748B" font-family="sans-serif" font-size="10" font-weight="600">TOTAL ASSET LOG</text>
+    <text x="16" y="48" fill="#F8FAFC" font-family="sans-serif" font-size="20" font-weight="bold">1,428</text>
+    <text x="90" y="48" fill="#10B981" font-family="monospace" font-size="10">+24 this mo</text>
+
+    <!-- Metric 2: Studio Audio Gear -->
+    <rect x="230" y="0" width="210" height="60" rx="8" fill="url(#rriCard)" stroke="#1E293B" stroke-width="1" />
+    <text x="246" y="24" fill="#64748B" font-family="sans-serif" font-size="10" font-weight="600">BROADCAST HARDWARE</text>
+    <text x="246" y="48" fill="#00D4FF" font-family="sans-serif" font-size="20" font-weight="bold">864</text>
+    <text x="320" y="48" fill="#94A3B8" font-family="monospace" font-size="10">Active in On-Air</text>
+
+    <!-- Metric 3: Maintenance / Inspection -->
+    <rect x="460" y="0" width="220" height="60" rx="8" fill="url(#rriCard)" stroke="#1E293B" stroke-width="1" />
+    <text x="476" y="24" fill="#64748B" font-family="sans-serif" font-size="10" font-weight="600">MAINTENANCE CYCLE</text>
+    <text x="476" y="48" fill="#F59E0B" font-family="sans-serif" font-size="20" font-weight="bold">12</text>
+    <text x="510" y="48" fill="#94A3B8" font-family="monospace" font-size="10">Scheduled Checks</text>
+  </g>
+
+  <!-- Data Table Header -->
+  <g transform="translate(60, 220)">
+    <rect x="0" y="0" width="680" height="32" rx="4" fill="#10182A" stroke="#1E293B" stroke-width="1" />
+    <text x="20" y="20" fill="#64748B" font-family="monospace" font-size="10" font-weight="bold">ASSET CODE</text>
+    <text x="140" y="20" fill="#64748B" font-family="monospace" font-size="10" font-weight="bold">DESCRIPTION &amp; MODEL</text>
+    <text x="360" y="20" fill="#64748B" font-family="monospace" font-size="10" font-weight="bold">CATEGORY</text>
+    <text x="480" y="20" fill="#64748B" font-family="monospace" font-size="10" font-weight="bold">LOCATION</text>
+    <text x="590" y="20" fill="#64748B" font-family="monospace" font-size="10" font-weight="bold">STATUS</text>
+  </g>
+
+  <!-- Table Row 1 -->
+  <g transform="translate(60, 260)">
+    <rect x="0" y="0" width="680" height="36" rx="4" fill="#0C1426" stroke="#1E293B" stroke-width="0.8" />
+    <text x="20" y="22" fill="#00D4FF" font-family="monospace" font-size="10">RRI-TX-0419</text>
+    <text x="140" y="22" fill="#E2E8F0" font-family="sans-serif" font-size="10">FM Solid-State Transmitter 5kW</text>
+    <text x="360" y="22" fill="#94A3B8" font-family="sans-serif" font-size="10">Transmission</text>
+    <text x="480" y="22" fill="#94A3B8" font-family="sans-serif" font-size="10">Tx Station A</text>
+    <rect x="585" y="9" width="70" height="18" rx="9" fill="#10B981" fill-opacity="0.15" stroke="#10B981" stroke-width="0.8" />
+    <text x="600" y="21" fill="#10B981" font-family="sans-serif" font-size="9" font-weight="bold">OPERATIONAL</text>
+  </g>
+
+  <!-- Table Row 2 -->
+  <g transform="translate(60, 302)">
+    <rect x="0" y="0" width="680" height="36" rx="4" fill="#0E172C" stroke="#1E293B" stroke-width="0.8" />
+    <text x="20" y="22" fill="#00D4FF" font-family="monospace" font-size="10">RRI-ST-1082</text>
+    <text x="140" y="22" fill="#E2E8F0" font-family="sans-serif" font-size="10">Digital Broadcast Audio Console</text>
+    <text x="360" y="22" fill="#94A3B8" font-family="sans-serif" font-size="10">Studio Audio</text>
+    <text x="480" y="22" fill="#94A3B8" font-family="sans-serif" font-size="10">Pro 1 Master</text>
+    <rect x="585" y="9" width="70" height="18" rx="9" fill="#10B981" fill-opacity="0.15" stroke="#10B981" stroke-width="0.8" />
+    <text x="600" y="21" fill="#10B981" font-family="sans-serif" font-size="9" font-weight="bold">OPERATIONAL</text>
+  </g>
+
+  <!-- Table Row 3 -->
+  <g transform="translate(60, 344)">
+    <rect x="0" y="0" width="680" height="36" rx="4" fill="#0C1426" stroke="#1E293B" stroke-width="0.8" />
+    <text x="20" y="22" fill="#00D4FF" font-family="monospace" font-size="10">RRI-ENG-0255</text>
+    <text x="140" y="22" fill="#E2E8F0" font-family="sans-serif" font-size="10">Portable Field Recorder &amp; Mic Kit</text>
+    <text x="360" y="22" fill="#94A3B8" font-family="sans-serif" font-size="10">Field Reporting</text>
+    <text x="480" y="22" fill="#94A3B8" font-family="sans-serif" font-size="10">News Unit 2</text>
+    <rect x="585" y="9" width="70" height="18" rx="9" fill="#F59E0B" fill-opacity="0.15" stroke="#F59E0B" stroke-width="0.8" />
+    <text x="605" y="21" fill="#F59E0B" font-family="sans-serif" font-size="9" font-weight="bold">CHECKED OUT</text>
+  </g>
+
+  <!-- Watermark: Concept Visual -->
+  <g transform="translate(260, 395)">
+    <rect x="0" y="0" width="280" height="18" rx="4" fill="#070B14" fill-opacity="0.9" stroke="#1E293B" stroke-width="0.8" />
+    <text x="14" y="12" fill="#64748B" font-family="monospace" font-size="9" letter-spacing="1">ILLUSTRATIVE CONCEPT // LPP RRI ASSET SYSTEM</text>
+  </g>
+</svg>

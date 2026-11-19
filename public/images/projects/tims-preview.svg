@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E1424" />
+      <stop offset="100%" stop-color="#070B14" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#161F36" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0.9" />
+    </linearGradient>
+    <linearGradient id="accentGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0066FF" />
+      <stop offset="100%" stop-color="#00D4FF" />
+    </linearGradient>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1E293B" stroke-width="0.5" stroke-opacity="0.4" />
+    </pattern>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="800" height="450" fill="url(#bgGrad)" />
+  <rect width="800" height="450" fill="url(#grid)" />
+
+  <!-- Top Ambient Glow -->
+  <circle cx="400" cy="50" r="220" fill="#00D4FF" opacity="0.07" />
+
+  <!-- App Window Container -->
+  <rect x="40" y="30" width="720" height="390" rx="12" fill="#0C1220" stroke="#1E293B" stroke-width="1.5" />
+
+  <!-- Window Header Bar -->
+  <rect x="40" y="30" width="720" height="42" rx="12" fill="#131B2E" />
+  <rect x="40" y="60" width="720" height="12" fill="#131B2E" />
+  <line x1="40" y1="72" x2="760" y2="72" stroke="#1E293B" stroke-width="1" />
+
+  <!-- Window Control Dots -->
+  <circle cx="65" cy="51" r="5" fill="#EF4444" opacity="0.8" />
+  <circle cx="82" cy="51" r="5" fill="#F59E0B" opacity="0.8" />
+  <circle cx="99" cy="51" r="5" fill="#10B981" opacity="0.8" />
+
+  <!-- App Header Title & Telemetry -->
+  <text x="125" y="55" fill="#94A3B8" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">TIMS // INVENTORY CONTROL SYSTEM (ILLUSTRATIVE)</text>
+  <rect x="625" y="43" width="115" height="18" rx="4" fill="#00D4FF" fill-opacity="0.1" stroke="#00D4FF" stroke-opacity="0.4" stroke-width="1" />
+  <circle cx="637" cy="52" r="3" fill="#00D4FF" />
+  <text x="647" y="55" fill="#00D4FF" font-family="monospace" font-size="9" font-weight="bold">SYSTEM ACTIVE</text>
+
+  <!-- Sidebar -->
+  <rect x="40" y="72" width="140" height="348" fill="#0F172A" fill-opacity="0.6" />
+  <line x1="180" y1="72" x2="180" y2="420" stroke="#1E293B" stroke-width="1" />
+
+  <!-- Sidebar Nav Items -->
+  <rect x="52" y="92" width="116" height="28" rx="6" fill="#00D4FF" fill-opacity="0.15" stroke="#00D4FF" stroke-opacity="0.3" stroke-width="1" />
+  <text x="65" y="110" fill="#00D4FF" font-family="monospace" font-size="10" font-weight="600">■ DASHBOARD</text>
+
+  <text x="65" y="145" fill="#64748B" font-family="monospace" font-size="10">▢ INVENTORY</text>
+  <text x="65" y="175" fill="#64748B" font-family="monospace" font-size="10">▢ STOCK IN/OUT</text>
+  <text x="65" y="205" fill="#64748B" font-family="monospace" font-size="10">▢ LOAN & RETURN</text>
+  <text x="65" y="235" fill="#64748B" font-family="monospace" font-size="10">▢ RESERVATION</text>
+  <text x="65" y="265" fill="#64748B" font-family="monospace" font-size="10">▢ ENGINEERING</text>
+  <text x="65" y="295" fill="#64748B" font-family="monospace" font-size="10">▢ RBAC ROLES</text>
+
+  <!-- Main Content Dashboard -->
+  <!-- Top 3 Metric Cards -->
+  <rect x="200" y="92" width="168" height="70" rx="8" fill="url(#cardGrad)" stroke="#1E293B" stroke-width="1" />
+  <text x="215" y="112" fill="#64748B" font-family="monospace" font-size="9" font-weight="600">TOTAL ASSETS</text>
+  <text x="215" y="138" fill="#F8FAFC" font-family="monospace" font-size="20" font-weight="bold">14,820</text>
+  <text x="215" y="153" fill="#10B981" font-family="monospace" font-size="9">▲ ONLINE INVENTORY</text>
+
+  <rect x="382" y="92" width="168" height="70" rx="8" fill="url(#cardGrad)" stroke="#1E293B" stroke-width="1" />
+  <text x="397" y="112" fill="#64748B" font-family="monospace" font-size="9" font-weight="600">STOCK IN / OUT</text>
+  <text x="397" y="138" fill="#00D4FF" font-family="monospace" font-size="20" font-weight="bold">1,245</text>
+  <text x="397" y="153" fill="#00D4FF" font-family="monospace" font-size="9">● VERIFIED TRANSACTIONS</text>
+
+  <rect x="564" y="92" width="176" height="70" rx="8" fill="url(#cardGrad)" stroke="#1E293B" stroke-width="1" />
+  <text x="579" y="112" fill="#64748B" font-family="monospace" font-size="9" font-weight="600">RESERVATIONS</text>
+  <text x="579" y="138" fill="#F8FAFC" font-family="monospace" font-size="20" font-weight="bold">382</text>
+  <text x="579" y="153" fill="#F59E0B" font-family="monospace" font-size="9">● LOAN & RETURN ACTIVE</text>
+
+  <!-- Middle Graph / Inventory Chart -->
+  <rect x="200" y="178" width="350" height="150" rx="8" fill="url(#cardGrad)" stroke="#1E293B" stroke-width="1" />
+  <text x="215" y="200" fill="#94A3B8" font-family="monospace" font-size="10" font-weight="bold">INVENTORY CONTROL & STOCK MOVEMENT</text>
+
+  <!-- Chart Grid Lines -->
+  <line x1="220" y1="230" x2="530" y2="230" stroke="#1E293B" stroke-width="0.8" stroke-dasharray="3 3" />
+  <line x1="220" y1="265" x2="530" y2="265" stroke="#1E293B" stroke-width="0.8" stroke-dasharray="3 3" />
+  <line x1="220" y1="300" x2="530" y2="300" stroke="#1E293B" stroke-width="0.8" />
+
+  <!-- Bar Charts -->
+  <rect x="235" y="260" width="18" height="40" rx="3" fill="#1E293B" />
+  <rect x="257" y="240" width="18" height="60" rx="3" fill="#00D4FF" fill-opacity="0.8" />
+
+  <rect x="295" y="250" width="18" height="50" rx="3" fill="#1E293B" />
+  <rect x="317" y="220" width="18" height="80" rx="3" fill="#00D4FF" fill-opacity="0.8" />
+
+  <rect x="355" y="265" width="18" height="35" rx="3" fill="#1E293B" />
+  <rect x="377" y="235" width="18" height="65" rx="3" fill="#00D4FF" fill-opacity="0.8" />
+
+  <rect x="415" y="270" width="18" height="30" rx="3" fill="#1E293B" />
+  <rect x="437" y="215" width="18" height="85" rx="3" fill="#00D4FF" fill-opacity="0.8" />
+
+  <rect x="475" y="245" width="18" height="55" rx="3" fill="#1E293B" />
+  <rect x="497" y="225" width="18" height="75" rx="3" fill="url(#accentGlow)" />
+
+  <!-- Right Operational Panel -->
+  <rect x="564" y="178" width="176" height="150" rx="8" fill="url(#cardGrad)" stroke="#1E293B" stroke-width="1" />
+  <text x="579" y="200" fill="#94A3B8" font-family="monospace" font-size="10" font-weight="bold">TIE LOGISTICS</text>
+
+  <!-- Status Rows -->
+  <rect x="579" y="215" width="146" height="24" rx="4" fill="#0C1220" stroke="#1E293B" stroke-width="0.8" />
+  <text x="589" y="231" fill="#64748B" font-family="monospace" font-size="9">BARCODE SCAN</text>
+  <text x="685" y="231" fill="#10B981" font-family="monospace" font-size="9">READY</text>
+
+  <rect x="579" y="247" width="146" height="24" rx="4" fill="#0C1220" stroke="#1E293B" stroke-width="0.8" />
+  <text x="589" y="263" fill="#64748B" font-family="monospace" font-size="9">DATABASE SYNC</text>
+  <text x="692" y="263" fill="#00D4FF" font-family="monospace" font-size="9">MSSQL</text>
+
+  <rect x="579" y="279" width="146" height="24" rx="4" fill="#0C1220" stroke="#1E293B" stroke-width="0.8" />
+  <text x="589" y="295" fill="#64748B" font-family="monospace" font-size="9">SECURITY LEVEL</text>
+  <text x="696" y="295" fill="#00D4FF" font-family="monospace" font-size="9">RBAC</text>
+
+  <!-- Bottom Data Rows / Mini Table -->
+  <rect x="200" y="340" width="540" height="65" rx="8" fill="url(#cardGrad)" stroke="#1E293B" stroke-width="1" />
+  <text x="215" y="360" fill="#64748B" font-family="monospace" font-size="9">TX-9021 • COMPONENT ASSEMBLY JIG • DIV TIE • STATUS: DISPATCHED</text>
+  <text x="215" y="385" fill="#64748B" font-family="monospace" font-size="9">TX-9022 • PLC SENSOR MODULE B-04 • DIV TIE • STATUS: RESERVED</text>
+
+  <!-- Bottom Badge: Generic Illustration -->
+  <rect x="55" y="380" width="110" height="18" rx="4" fill="#000000" fill-opacity="0.4" stroke="#1E293B" stroke-width="0.8" />
+  <text x="62" y="392" fill="#475569" font-family="monospace" font-size="7.5" font-weight="600">CONCEPT VISUAL</text>
+</svg>
