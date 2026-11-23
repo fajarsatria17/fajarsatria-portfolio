@@ -13,14 +13,35 @@ interface NodeParticle {
   hueType: 'cyan' | 'blue';
 }
 
+interface EmberParticle {
+  x: number;
+  y: number;
+  vy: number;
+  radius: number;
+  alpha: number;
+  maxAlpha: number;
+  pulse: number;
+}
+
 export const DynamicBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const glowOrbRef = useRef<HTMLDivElement | null>(null);
 
+  // Parallax layer references
+  const farLayerRef = useRef<HTMLDivElement | null>(null);
+  const midLayerRef = useRef<HTMLDivElement | null>(null);
+  const nearLayerRef = useRef<HTMLDivElement | null>(null);
+
   const prefersReduced = useReducedMotion();
   const isVisible = useTabVisibility();
 
-  const mousePos = useRef<{ x: number; y: number; targetX: number; targetY: number; active: boolean }>({
+  // Scroll & mouse coordinates for layered 3D parallax
+  const scrollState = useRef({
+    targetY: 0,
+    currentY: 0,
+  });
+
+  const mousePos = useRef({
     x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0,
     y: typeof window !== 'undefined' ? window.innerHeight / 3 : 0,
     targetX: typeof window !== 'undefined' ? window.innerWidth / 2 : 0,
@@ -28,7 +49,19 @@ export const DynamicBackground: React.FC = () => {
     active: false,
   });
 
-  // Track mouse coordinates across the entire viewport
+  // Track window scroll with passive listener
+  useEffect(() => {
+    const handleScroll = () => {
+      scrollState.current.targetY = window.scrollY || window.pageYOffset || 0;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Track mouse coordinates across the viewport for gyro/tilt parallax
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       mousePos.current.targetX = e.clientX;
@@ -49,7 +82,7 @@ export const DynamicBackground: React.FC = () => {
     };
   }, []);
 
-  // Neural Synapse Mesh Canvas Simulation
+  // Neural Synapse & Near Embers Canvas Simulation with Parallax
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -62,24 +95,39 @@ export const DynamicBackground: React.FC = () => {
     let height = (canvas.height = window.innerHeight);
 
     const isMobile = width < 768;
-    const nodeCount = isMobile ? 32 : 55;
-    const connectDistance = isMobile ? 95 : 135;
+    const nodeCount = isMobile ? 36 : 60;
+    const connectDistance = isMobile ? 105 : 145;
     const connectDistanceSq = connectDistance * connectDistance;
-    const mouseInfluenceRadius = isMobile ? 110 : 160;
+    const mouseInfluenceRadius = isMobile ? 120 : 170;
     const mouseInfluenceRadiusSq = mouseInfluenceRadius * mouseInfluenceRadius;
 
-    // Initialize neural particles
+    // Layer 2: Neural synapse nodes
     const nodes: NodeParticle[] = [];
     for (let i = 0; i < nodeCount; i++) {
       nodes.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.45,
-        vy: (Math.random() - 0.5) * 0.45,
-        baseRadius: Math.random() * 1.5 + 1.0,
-        pulseSpeed: Math.random() * 0.025 + 0.015,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        baseRadius: Math.random() * 1.8 + 1.4, // larger, brighter nodes
+        pulseSpeed: Math.random() * 0.03 + 0.018,
         pulsePhase: Math.random() * Math.PI * 2,
-        hueType: Math.random() > 0.3 ? 'cyan' : 'blue',
+        hueType: Math.random() > 0.35 ? 'cyan' : 'blue',
+      });
+    }
+
+    // Layer 3: Near floating bokeh embers (higher depth layer)
+    const emberCount = isMobile ? 12 : 24;
+    const embers: EmberParticle[] = [];
+    for (let i = 0; i < emberCount; i++) {
+      embers.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vy: -(Math.random() * 0.35 + 0.15), // gently drifts upward
+        radius: Math.random() * 2.5 + 2.0, // large foreground bokeh
+        alpha: Math.random() * 0.5,
+        maxAlpha: Math.random() * 0.4 + 0.25,
+        pulse: Math.random() * Math.PI * 2,
       });
     }
 
@@ -99,29 +147,56 @@ export const DynamicBackground: React.FC = () => {
         return;
       }
 
-      // Smooth lerp for ambient glow spotlight tracking mouse
-      mousePos.current.x += (mousePos.current.targetX - mousePos.current.x) * 0.05;
-      mousePos.current.y += (mousePos.current.targetY - mousePos.current.y) * 0.05;
-
-      if (glowOrbRef.current) {
-        glowOrbRef.current.style.transform = `translate3d(${mousePos.current.x - 300}px, ${mousePos.current.y - 300}px, 0)`;
-      }
-
       // Delta time normalization
       const dt = Math.min((time - lastTime) / 16.67, 2.0);
       lastTime = time;
 
+      // Smooth scroll lerp for layered parallax
+      scrollState.current.currentY +=
+        (scrollState.current.targetY - scrollState.current.currentY) * 0.1;
+      const sY = scrollState.current.currentY;
+
+      // Mouse smooth lerp
+      mousePos.current.x += (mousePos.current.targetX - mousePos.current.x) * 0.06;
+      mousePos.current.y += (mousePos.current.targetY - mousePos.current.y) * 0.06;
+
+      const tiltX = (mousePos.current.x / width - 0.5) * 30;
+      const tiltY = (mousePos.current.y / height - 0.5) * 30;
+
+      // ── Apply Layered Parallax Transforms ──
+      if (!prefersReduced) {
+        // Far Layer: 0.12x scroll velocity + subtle mouse tilt
+        if (farLayerRef.current) {
+          farLayerRef.current.style.transform = `translate3d(${tiltX * 0.3}px, ${-sY * 0.12 + tiltY * 0.3}px, 0)`;
+        }
+
+        // Mid Layer: 0.38x scroll velocity + moderate mouse tilt
+        if (midLayerRef.current) {
+          midLayerRef.current.style.transform = `translate3d(${tiltX * 0.6}px, ${-sY * 0.38 + tiltY * 0.6}px, 0)`;
+        }
+
+        // Near Layer: 0.72x scroll velocity + higher tilt
+        if (nearLayerRef.current) {
+          nearLayerRef.current.style.transform = `translate3d(${tiltX * 1.1}px, ${-sY * 0.72 + tiltY * 1.1}px, 0)`;
+        }
+      }
+
+      // Cursor spotlight ambient glow tracking
+      if (glowOrbRef.current) {
+        glowOrbRef.current.style.transform = `translate3d(${mousePos.current.x - 350}px, ${mousePos.current.y - 350}px, 0)`;
+      }
+
       ctx.clearRect(0, 0, width, height);
 
-      // If user prefers reduced motion, draw once as static aesthetic constellation
+      // Reduced motion fallback: draw static snapshot
       if (prefersReduced) {
         for (let i = 0; i < nodes.length; i++) {
           const a = nodes[i];
           if (!a) continue;
 
           ctx.beginPath();
-          ctx.arc(a.x, a.y, a.baseRadius, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(0, 212, 255, 0.35)';
+          ctx.arc(a.x, a.y, a.baseRadius * 1.2, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(0, 212, 255, 0.6)';
           ctx.fill();
 
           for (let j = i + 1; j < nodes.length; j++) {
@@ -133,12 +208,12 @@ export const DynamicBackground: React.FC = () => {
             const distSq = dx * dx + dy * dy;
 
             if (distSq < connectDistanceSq) {
-              const alpha = (1 - distSq / connectDistanceSq) * 0.18;
+              const alpha = (1 - distSq / connectDistanceSq) * 0.35;
               ctx.beginPath();
               ctx.moveTo(a.x, a.y);
               ctx.lineTo(b.x, b.y);
               ctx.strokeStyle = `rgba(0, 212, 255, ${alpha})`;
-              ctx.lineWidth = 0.7;
+              ctx.lineWidth = 0.9;
               ctx.stroke();
             }
           }
@@ -146,16 +221,15 @@ export const DynamicBackground: React.FC = () => {
         return;
       }
 
-      // Update and draw nodes
+      // ── Render Layer 2: Neural Synapse Particles & Lines ──
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
         if (!node) continue;
 
-        // Position update
         node.x += node.vx * dt;
         node.y += node.vy * dt;
 
-        // Bounce boundaries softly
+        // Bounce boundaries
         if (node.x < 0) {
           node.x = 0;
           node.vx = Math.abs(node.vx);
@@ -172,7 +246,7 @@ export const DynamicBackground: React.FC = () => {
           node.vy = -Math.abs(node.vy);
         }
 
-        // Mouse subtle magnetic deflection
+        // Mouse magnetic deflection
         if (mousePos.current.active) {
           const mdx = node.x - mousePos.current.x;
           const mdy = node.y - mousePos.current.y;
@@ -180,7 +254,7 @@ export const DynamicBackground: React.FC = () => {
 
           if (mDistSq < mouseInfluenceRadiusSq && mDistSq > 1) {
             const mDist = Math.sqrt(mDistSq);
-            const force = (1 - mDist / mouseInfluenceRadius) * 0.75;
+            const force = (1 - mDist / mouseInfluenceRadius) * 0.9;
             node.x += (mdx / mDist) * force * dt;
             node.y += (mdy / mDist) * force * dt;
           }
@@ -188,19 +262,19 @@ export const DynamicBackground: React.FC = () => {
 
         // Node pulsating glow
         node.pulsePhase += node.pulseSpeed;
-        const pulse = Math.sin(node.pulsePhase) * 0.4 + 0.9;
+        const pulse = Math.sin(node.pulsePhase) * 0.35 + 0.95;
         const currentRadius = node.baseRadius * pulse;
 
         ctx.beginPath();
         ctx.arc(node.x, node.y, currentRadius, 0, Math.PI * 2);
         if (node.hueType === 'cyan') {
-          ctx.fillStyle = `rgba(0, 212, 255, ${0.45 * pulse})`;
+          ctx.fillStyle = `rgba(0, 212, 255, ${0.7 * pulse})`;
           ctx.shadowColor = '#00D4FF';
-          ctx.shadowBlur = 8;
+          ctx.shadowBlur = 12;
         } else {
-          ctx.fillStyle = `rgba(147, 197, 253, ${0.35 * pulse})`;
+          ctx.fillStyle = `rgba(147, 197, 253, ${0.6 * pulse})`;
           ctx.shadowColor = '#93c5fd';
-          ctx.shadowBlur = 6;
+          ctx.shadowBlur = 10;
         }
         ctx.fill();
 
@@ -215,17 +289,41 @@ export const DynamicBackground: React.FC = () => {
 
           if (distSq < connectDistanceSq) {
             const factor = 1 - distSq / connectDistanceSq;
-            const alpha = factor * 0.22;
+            const alpha = factor * 0.42; // brighter, crisper line connections
 
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
             ctx.lineTo(other.x, other.y);
             ctx.strokeStyle = `rgba(0, 212, 255, ${alpha})`;
-            ctx.lineWidth = factor * 0.9 + 0.3;
-            ctx.shadowBlur = 0; // reset for lines to optimize drawing performance
+            ctx.lineWidth = factor * 1.3 + 0.4;
+            ctx.shadowBlur = 0;
             ctx.stroke();
           }
         }
+      }
+
+      // ── Render Layer 3: Near Floating Bokeh Embers ──
+      for (let k = 0; k < embers.length; k++) {
+        const ember = embers[k];
+        if (!ember) continue;
+
+        ember.y += ember.vy * dt;
+        ember.pulse += 0.02;
+
+        // Wrap around vertically
+        if (ember.y < -20) {
+          ember.y = height + 20;
+          ember.x = Math.random() * width;
+        }
+
+        const alphaPulse = Math.sin(ember.pulse) * 0.15 + ember.maxAlpha;
+
+        ctx.beginPath();
+        ctx.arc(ember.x, ember.y, ember.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0, 212, 255, ${Math.max(0.05, alphaPulse)})`;
+        ctx.shadowColor = '#00D4FF';
+        ctx.shadowBlur = 16;
+        ctx.fill();
       }
 
       animId = requestAnimationFrame(render);
@@ -242,32 +340,45 @@ export const DynamicBackground: React.FC = () => {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none"
+      className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none bg-[#080C16]"
     >
-      {/* ── Layer 1: Ambient Quantum Aurora Glows ── */}
-
-      {/* Floating Aurora Cluster 1: Deep Cosmic Teal (top-left slow drift) */}
+      {/* ══════════════════════════════════════════════════════════════
+          LAYER 1: FAR AURORA & NEBULA CLUSTERS (Parallax Velocity: 0.12x)
+      ══════════════════════════════════════════════════════════════ */}
       <div
-        className="absolute -top-[15%] -left-[10%] w-[600px] sm:w-[800px] h-[600px] sm:h-[800px] rounded-full bg-gradient-to-br from-accent/15 via-[#004b66]/20 to-transparent blur-[140px] opacity-70 animate-pulse duration-[8000ms]"
-        style={{ willChange: 'transform, opacity' }}
-      />
-
-      {/* Floating Aurora Cluster 2: Midnight Indigo / Violet (bottom-right slow drift) */}
-      <div
-        className="absolute -bottom-[20%] -right-[15%] w-[700px] sm:w-[900px] h-[700px] sm:h-[900px] rounded-full bg-gradient-to-tl from-indigo-950/40 via-blue-900/20 to-transparent blur-[160px] opacity-80"
+        ref={farLayerRef}
+        className="absolute inset-0 w-full h-[140%] pointer-events-none"
         style={{ willChange: 'transform' }}
-      />
+      >
+        {/* Nebula Cluster 1: Top-Left Cyan Neon & Cosmic Teal (behind Hero & Overview) */}
+        <div
+          className="absolute -top-[5%] -left-[10%] w-[750px] sm:w-[950px] h-[750px] sm:h-[950px] rounded-full bg-gradient-to-br from-[#00D4FF]/30 via-[#0080B0]/35 to-transparent blur-[120px] opacity-85 animate-pulse duration-[7000ms]"
+          style={{ willChange: 'transform, opacity' }}
+        />
 
-      {/* Interactive Cursor-Tracking Ambient Spotlight Glow */}
+        {/* Nebula Cluster 2: Center-Right Electric Royal Blue (behind Skills & Projects) */}
+        <div
+          className="absolute top-[35%] -right-[12%] w-[850px] sm:w-[1050px] h-[850px] sm:h-[1050px] rounded-full bg-gradient-to-bl from-[#1E40AF]/45 via-[#00D4FF]/25 to-transparent blur-[140px] opacity-85"
+          style={{ willChange: 'transform' }}
+        />
+
+        {/* Nebula Cluster 3: Bottom-Left Deep Sky & Indigo (behind Contact & Reach Out) */}
+        <div
+          className="absolute bottom-[5%] -left-[12%] w-[800px] sm:w-[1000px] h-[800px] sm:h-[1000px] rounded-full bg-gradient-to-tr from-[#0284c7]/35 via-[#0f172a]/50 to-transparent blur-[130px] opacity-90"
+          style={{ willChange: 'transform' }}
+        />
+      </div>
+
+      {/* Interactive Cursor-Tracking Ambient Spotlight Glow (Luminance Boosted) */}
       <div
         ref={glowOrbRef}
-        className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full bg-accent/[0.07] blur-[150px] opacity-80 pointer-events-none transition-opacity duration-700"
+        className="absolute top-0 left-0 w-[700px] h-[700px] rounded-full bg-accent/[0.14] blur-[130px] opacity-90 pointer-events-none transition-opacity duration-500"
         style={{ willChange: 'transform' }}
       />
 
-      {/* ── Layer 2: Subtle Cyber Grid Matrix Texture ── */}
+      {/* Cyber Grid Matrix Pattern (Opacity increased to 0.055 for crisp texture) */}
       <div
-        className="absolute inset-0 opacity-[0.025]"
+        className="absolute inset-0 opacity-[0.055]"
         style={{
           backgroundImage:
             'linear-gradient(to right, #00D4FF 1px, transparent 1px), linear-gradient(to bottom, #00D4FF 1px, transparent 1px)',
@@ -275,15 +386,32 @@ export const DynamicBackground: React.FC = () => {
         }}
       />
 
-      {/* ── Layer 3: Interactive Neural Synapse Mesh Canvas ── */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
+      {/* ══════════════════════════════════════════════════════════════
+          LAYER 2 & 3: MID NEURAL SYNAPSE + NEAR BOKEH EMBERS (Parallax Velocity: 0.38x & 0.72x)
+      ══════════════════════════════════════════════════════════════ */}
+      <div
+        ref={midLayerRef}
+        className="absolute inset-0 w-full h-[130%] pointer-events-none"
+        style={{ willChange: 'transform' }}
+      >
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
+      </div>
 
-      {/* ── Layer 4: Vignette Contrast Guard for 100% Text Readability ── */}
+      {/* Near Layer Wrapper for smooth parallax staging */}
+      <div
+        ref={nearLayerRef}
+        className="absolute inset-0 w-full h-[160%] pointer-events-none"
+        style={{ willChange: 'transform' }}
+      />
+
+      {/* ══════════════════════════════════════════════════════════════
+          LAYER 4: SOFTENED CONTRAST GUARD (Bright Peripheral, Clean Center)
+      ══════════════════════════════════════════════════════════════ */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 80% 60% at 50% 35%, transparent 40%, rgba(10, 14, 26, 0.75) 85%, #0A0E1A 100%)',
+            'radial-gradient(ellipse 90% 70% at 50% 30%, transparent 55%, rgba(8, 12, 22, 0.35) 80%, rgba(8, 12, 22, 0.75) 100%)',
         }}
       />
     </div>
