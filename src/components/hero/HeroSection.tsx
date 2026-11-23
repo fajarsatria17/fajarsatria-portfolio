@@ -44,7 +44,7 @@ export const HeroSection: React.FC = () => {
       id="hero"
       ref={containerRef}
       aria-label="Introduction"
-      className="relative min-h-[96vh] flex flex-col items-center justify-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-bg-base text-center"
+      className="relative min-h-[96vh] flex flex-col items-center justify-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-transparent text-center"
     >
       {/* Background ambient radial accent glow */}
       <div
