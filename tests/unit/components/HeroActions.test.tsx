@@ -45,12 +45,17 @@ describe('HeroActions Component', () => {
     expect(contactEl?.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth' });
   });
 
-  it('renders verified Instagram and email links and hides unverified links (BR-010)', () => {
+  it('renders verified GitHub, Instagram, and email links and hides unverified links (BR-010)', () => {
     render(
       <LanguageProvider>
         <HeroActions />
       </LanguageProvider>
     );
+
+    // GitHub is verified
+    const githubLink = screen.getByRole('link', { name: /visit github profile/i });
+    expect(githubLink).toHaveAttribute('href', 'https://github.com/fajarsatria17');
+    expect(githubLink).toHaveAttribute('rel', 'noopener noreferrer');
 
     // Instagram is verified
     const instagramLink = screen.getByRole('link', { name: /visit instagram profile/i });
@@ -61,8 +66,7 @@ describe('HeroActions Component', () => {
     const emailLink = screen.getByRole('link', { name: /send direct email/i });
     expect(emailLink).toHaveAttribute('href', 'mailto:fajarsatria1945@gmail.com');
 
-    // GitHub and LinkedIn are omitted until user supplies them
-    expect(screen.queryByRole('link', { name: /visit github profile/i })).not.toBeInTheDocument();
+    // LinkedIn is omitted until user supplies it
     expect(screen.queryByRole('link', { name: /visit linkedin profile/i })).not.toBeInTheDocument();
   });
 });

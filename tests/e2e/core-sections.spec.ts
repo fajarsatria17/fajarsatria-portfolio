@@ -109,7 +109,11 @@ test.describe('Core Portfolio Sections (Phase 4.1 Personalization)', () => {
     await expect(page.locator('#education')).toBeInViewport();
   });
 
-  test('social links only display verified channels (Instagram and email, no invented URLs)', async ({ page }) => {
+  test('social links only display verified channels (GitHub, Instagram, and email, no invented URLs)', async ({ page }) => {
+    // Verified GitHub
+    const githubLink = page.locator('a[href="https://github.com/fajarsatria17"]').first();
+    await expect(githubLink).toBeVisible();
+
     // Verified Instagram
     const igLink = page.locator('a[href="https://www.instagram.com/fzrstria_?jplx=bnd1cHg1N3E1b3Bj"]').first();
     await expect(igLink).toBeVisible();
@@ -118,8 +122,7 @@ test.describe('Core Portfolio Sections (Phase 4.1 Personalization)', () => {
     const emailLink = page.locator('a[href="mailto:fajarsatria1945@gmail.com"]').first();
     await expect(emailLink).toBeVisible();
 
-    // Fictional / unverified GitHub and LinkedIn should NOT be rendered in the DOM
-    await expect(page.locator('a[href="https://github.com"]')).not.toBeVisible();
+    // Unverified LinkedIn should NOT be rendered in the DOM while empty
     await expect(page.locator('a[href="https://linkedin.com"]')).not.toBeVisible();
   });
 

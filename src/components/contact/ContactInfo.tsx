@@ -4,6 +4,8 @@ import { profile } from '@data/profile';
 import { Card, ExternalLink, ScrambleText } from '@components/ui';
 import {
   EnvelopeSimple,
+  GithubLogo,
+  LinkedinLogo,
   InstagramLogo,
   Copy,
   Check,
@@ -118,6 +120,64 @@ export const ContactInfo: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {/* GitHub Verified Channel */}
+        {profile.socialLinks.github && (
+          <div className="p-4 rounded-xl bg-bg-surface/80 border border-border hover:border-accent/40 transition-all duration-200 group">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/30 flex items-center justify-center text-accent shrink-0 group-hover:scale-105 transition-transform">
+                  <GithubLogo size={20} />
+                </div>
+                <div className="min-w-0">
+                  <p className="font-mono text-[11px] text-text-tertiary uppercase">
+                    GitHub Repositories
+                  </p>
+                  <span className="font-mono text-sm text-text-primary font-semibold truncate block">
+                    @fajarsatria17
+                  </span>
+                </div>
+              </div>
+
+              <ExternalLink
+                href={profile.socialLinks.github}
+                aria-label="Visit Fajar Satria GitHub Profile"
+                className="text-xs font-mono px-3 py-1.5 rounded-lg bg-bg-overlay/80 hover:bg-accent/20 border border-border text-text-secondary hover:text-accent font-semibold transition-all inline-flex items-center gap-1 shrink-0"
+              >
+                Explore →
+              </ExternalLink>
+            </div>
+          </div>
+        )}
+
+        {/* LinkedIn Verified Channel */}
+        {profile.socialLinks.linkedin && (
+          <div className="p-4 rounded-xl bg-bg-surface/80 border border-border hover:border-accent/40 transition-all duration-200 group">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/30 flex items-center justify-center text-accent shrink-0 group-hover:scale-105 transition-transform">
+                  <LinkedinLogo size={20} />
+                </div>
+                <div className="min-w-0">
+                  <p className="font-mono text-[11px] text-text-tertiary uppercase">
+                    LinkedIn Network
+                  </p>
+                  <span className="font-mono text-sm text-text-primary font-semibold truncate block">
+                    Fajar Satria
+                  </span>
+                </div>
+              </div>
+
+              <ExternalLink
+                href={profile.socialLinks.linkedin}
+                aria-label="Visit Fajar Satria LinkedIn Profile"
+                className="text-xs font-mono px-3 py-1.5 rounded-lg bg-bg-overlay/80 hover:bg-accent/20 border border-border text-text-secondary hover:text-accent font-semibold transition-all inline-flex items-center gap-1 shrink-0"
+              >
+                Connect →
+              </ExternalLink>
+            </div>
+          </div>
+        )}
 
         {/* Instagram Verified Channel */}
         {profile.socialLinks.instagram && (
