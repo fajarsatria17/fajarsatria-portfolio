@@ -2,6 +2,7 @@ import React, { type ReactNode } from 'react';
 import { Navbar } from '@components/navigation';
 import { Footer } from './Footer';
 import { DynamicBackground } from './DynamicBackground';
+import { BackToTop } from './BackToTop';
 import { SkipLink } from '@components/ui';
 
 export interface PageLayoutProps {
@@ -22,6 +23,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
       <div className="relative z-10">
         <Footer />
       </div>
+      <BackToTop />
     </div>
   );
 };
