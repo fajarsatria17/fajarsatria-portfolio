@@ -2,6 +2,7 @@ import React, { Suspense, useRef, useState, useEffect } from 'react';
 import { HeroContent } from './HeroContent';
 import { HeroSceneFallback } from './HeroSceneFallback';
 import { HeroSceneErrorBoundary } from './HeroSceneErrorBoundary';
+import { profile } from '@data/profile';
 import { useReducedMotion } from '@hooks/useReducedMotion';
 import { useWebGLSupport } from '@hooks/useWebGLSupport';
 import { usePointerParallax } from '@hooks/usePointerParallax';
@@ -76,10 +77,10 @@ export const HeroSection: React.FC = () => {
             </HeroSceneErrorBoundary>
           )}
 
-          {/* Giant Layered Backdrop Typography: "PORTFOLIO" */}
-          <div className="absolute -bottom-4 sm:-bottom-8 left-1/2 -translate-x-1/2 pointer-events-none select-none z-10 w-screen max-w-4xl px-2 text-center overflow-hidden">
-            <span className="font-display font-black text-5xl sm:text-7xl md:text-8xl tracking-wider text-transparent bg-clip-text bg-gradient-to-b from-white/95 via-slate-200/40 to-transparent drop-shadow-2xl opacity-90 inline-block uppercase">
-              PORTFOLIO
+          {/* Giant Layered Backdrop Typography: "FAJAR SATRIA" */}
+          <div className="absolute -bottom-3 sm:-bottom-6 left-1/2 -translate-x-1/2 pointer-events-none select-none z-10 w-screen max-w-5xl px-2 text-center overflow-hidden">
+            <span className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-wider text-transparent bg-clip-text bg-gradient-to-b from-white/95 via-slate-200/40 to-transparent drop-shadow-2xl opacity-90 inline-block uppercase whitespace-nowrap">
+              {profile.name}
             </span>
           </div>
         </div>

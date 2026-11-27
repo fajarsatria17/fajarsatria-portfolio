@@ -20,13 +20,13 @@ export const HeroContent: React.FC = () => {
         </span>
       </div>
 
-      {/* Main Identity Heading (H1) with interactive hover scramble */}
-      <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-text-primary leading-[1.1] cursor-default">
+      {/* Main Identity Heading (H1) - compact editorial sub-label to complement backdrop */}
+      <h1 className="text-sm sm:text-base font-mono font-semibold tracking-[0.22em] text-text-secondary uppercase cursor-default">
         <ScrambleText text={profile.name} trigger="hover" speed={22} />
       </h1>
 
-      {/* Professional Headline with Cyber Scramble Decode Animation */}
-      <p className="text-xl sm:text-2xl font-display font-semibold text-accent leading-snug cursor-default">
+      {/* Professional Headline as Visual Centerpiece */}
+      <p className="text-2xl sm:text-4xl lg:text-5xl font-display font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-text-primary to-accent leading-[1.15] cursor-default">
         <ScrambleText text={localize(profile.headline)} trigger="both" delay={80} speed={24} />
       </p>
 
