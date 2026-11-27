@@ -77,7 +77,7 @@ const BiometricShader = {
       }
 
       // 2. Real-time Holographic Biometric Scanner Beam
-      // Sweeps top to bottom every ~3.2 seconds
+      // Sweeps top to bottom across the person every ~3.2 seconds
       if (uProgress >= 0.85) {
         float scanPeriod = 3.2;
         float scanTime = mod(uTime, scanPeriod);
@@ -86,16 +86,19 @@ const BiometricShader = {
           float scanPos = 1.05 - (scanTime / 2.0) * 1.1; // sweeps 1.05 down to -0.05
           float scanDist = abs(vUv.y - scanPos);
 
-          // Intense core scanline beam
-          float beam = smoothstep(0.035, 0.0, scanDist) * 0.55;
+          // Intense core cyan laser beam
+          float coreBeam = smoothstep(0.015, 0.0, scanDist) * 0.95;
+          // Soft ambient luminous halo
+          float haloBeam = smoothstep(0.06, 0.0, scanDist) * 0.45;
 
-          // Subtle holographic trailing tail above the beam
-          float trail = smoothstep(0.18, 0.0, vUv.y - scanPos) * step(scanPos, vUv.y) * 0.22;
+          // Holographic trailing tail above the beam
+          float trail = smoothstep(0.18, 0.0, vUv.y - scanPos) * step(scanPos, vUv.y) * 0.28;
 
-          // Subtle horizontal grid interference in the scanner
+          // High-tech micro scanlines & grid pulse
+          float scanlines = sin(vUv.y * 360.0) * 0.12 + 0.88;
           float gridPulse = sin(vUv.x * 90.0) * 0.08 + 0.92;
 
-          finalColor += cyanGlow * (beam + trail) * gridPulse;
+          finalColor += cyanGlow * (coreBeam + haloBeam + trail) * scanlines * gridPulse;
         }
       }
 

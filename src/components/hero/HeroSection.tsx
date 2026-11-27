@@ -2,7 +2,6 @@ import React, { Suspense, useRef, useState, useEffect } from 'react';
 import { HeroContent } from './HeroContent';
 import { HeroSceneFallback } from './HeroSceneFallback';
 import { HeroSceneErrorBoundary } from './HeroSceneErrorBoundary';
-import { BiometricHUD } from './BiometricHUD';
 import { useReducedMotion } from '@hooks/useReducedMotion';
 import { useWebGLSupport } from '@hooks/useWebGLSupport';
 import { usePointerParallax } from '@hooks/usePointerParallax';
@@ -70,14 +69,11 @@ export const HeroSection: React.FC = () => {
           {shouldUseFallback ? (
             <HeroSceneFallback />
           ) : (
-            <>
-              <HeroSceneErrorBoundary>
-                <Suspense fallback={<HeroSceneFallback />}>
-                  <LazyHeroScene pointerTarget={pointerTarget} />
-                </Suspense>
-              </HeroSceneErrorBoundary>
-              <BiometricHUD pointerTarget={pointerTarget} />
-            </>
+            <HeroSceneErrorBoundary>
+              <Suspense fallback={<HeroSceneFallback />}>
+                <LazyHeroScene pointerTarget={pointerTarget} />
+              </Suspense>
+            </HeroSceneErrorBoundary>
           )}
 
           {/* Giant Layered Backdrop Typography: "PORTFOLIO" */}

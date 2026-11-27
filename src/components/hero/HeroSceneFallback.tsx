@@ -11,8 +11,8 @@ export const HeroSceneFallback: React.FC = () => {
         {/* Ambient radial glow background */}
         <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#0066FF]/25 via-[#00D4FF]/20 to-transparent blur-3xl animate-pulse" />
 
-        {/* Cyber Holographic Portrait Container */}
-        <div className="relative w-full h-full rounded-2xl overflow-hidden flex items-center justify-center border border-accent/20 bg-gradient-to-b from-bg-surface/60 to-bg-base/80 backdrop-blur-xs">
+        {/* Clean Holographic Portrait Container (No framing box) */}
+        <div className="relative w-full h-full flex items-center justify-center">
           {/* Portrait Image with clean, sharp presentation */}
           <img
             src="/images/fajar-suit-portrait.png"
@@ -29,25 +29,6 @@ export const HeroSceneFallback: React.FC = () => {
               backgroundSize: '100% 4px',
             }}
           />
-
-          {/* Decorative Futuristic Holographic Reticle SVG */}
-          <svg
-            viewBox="0 0 200 200"
-            className="absolute inset-0 w-full h-full pointer-events-none z-10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {/* Corner Brackets */}
-            <path d="M 15 35 L 15 15 L 35 15" stroke="#00D4FF" strokeWidth="2" strokeOpacity="0.8" />
-            <path d="M 185 35 L 185 15 L 165 15" stroke="#00D4FF" strokeWidth="2" strokeOpacity="0.8" />
-            <path d="M 15 165 L 15 185 L 35 185" stroke="#00D4FF" strokeWidth="2" strokeOpacity="0.8" />
-            <path d="M 185 165 L 185 185 L 165 185" stroke="#00D4FF" strokeWidth="2" strokeOpacity="0.8" />
-
-            {/* Subtle Crosshair and Radar Nodes */}
-            <circle cx="100" cy="100" r="70" stroke="#00D4FF" strokeWidth="0.8" strokeDasharray="4 4" strokeOpacity="0.3" />
-            <line x1="20" y1="100" x2="35" y2="100" stroke="#00D4FF" strokeWidth="1" strokeOpacity="0.5" />
-            <line x1="165" y1="100" x2="180" y2="100" stroke="#00D4FF" strokeWidth="1" strokeOpacity="0.5" />
-          </svg>
         </div>
 
         {/* Orbital Cyber Ring SVG */}
