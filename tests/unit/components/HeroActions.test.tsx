@@ -54,7 +54,7 @@ describe('HeroActions Component', () => {
 
     // Instagram is verified
     const instagramLink = screen.getByRole('link', { name: /visit instagram profile/i });
-    expect(instagramLink).toHaveAttribute('href', 'https://instagram.com/fzrsatria_');
+    expect(instagramLink).toHaveAttribute('href', 'https://www.instagram.com/fzrstria_?jplx=bnd1cHg1N3E1b3Bj');
     expect(instagramLink).toHaveAttribute('rel', 'noopener noreferrer');
 
     // Email is verified

@@ -111,7 +111,7 @@ test.describe('Core Portfolio Sections (Phase 4.1 Personalization)', () => {
 
   test('social links only display verified channels (Instagram and email, no invented URLs)', async ({ page }) => {
     // Verified Instagram
-    const igLink = page.locator('a[href="https://instagram.com/fzrsatria_"]').first();
+    const igLink = page.locator('a[href="https://www.instagram.com/fzrstria_?jplx=bnd1cHg1N3E1b3Bj"]').first();
     await expect(igLink).toBeVisible();
 
     // Verified Email

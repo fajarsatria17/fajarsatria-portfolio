@@ -24,7 +24,7 @@ export const profile: Profile = {
   },
   socialLinks: {
     email: 'fajarsatria1945@gmail.com',
-    instagram: 'https://instagram.com/fzrsatria_',
+    instagram: 'https://www.instagram.com/fzrstria_?jplx=bnd1cHg1N3E1b3Bj',
     // GitHub and LinkedIn are omitted until verified URLs are provided by the user
   },
 };

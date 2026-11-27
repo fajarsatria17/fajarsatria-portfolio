@@ -132,7 +132,7 @@ export const ContactInfo: React.FC = () => {
                     Instagram Direct
                   </p>
                   <span className="font-mono text-sm text-text-primary font-semibold truncate block">
-                    @fzrsatria_
+                    @fzrstria_
                   </span>
                 </div>
               </div>
