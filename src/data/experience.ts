@@ -7,8 +7,8 @@ export const experience: Experience[] = [
     team: 'Digital Transformation (DX) Team',
     division: 'TIE – Factory Engineering',
     role: {
-      en: 'Full-Stack Developer / Digital Transformation Contributor',
-      id: 'Full-Stack Developer / Kontributor Transformasi Digital',
+      en: 'Nasional Internship / Digital Transformation Contributor',
+      id: 'Magang Nasional / Kontributor Transformasi Digital',
     },
     startDate: '2026-08',
     endDate: null,

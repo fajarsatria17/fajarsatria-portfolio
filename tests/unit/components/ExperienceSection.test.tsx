@@ -19,7 +19,7 @@ describe('ExperienceSection Component', () => {
     expect(screen.getByText(/LPP Radio Republik Indonesia \(RRI\)/i)).toBeInTheDocument();
 
     // Roles
-    expect(screen.getByText(/Full-Stack Developer \/ Digital Transformation Contributor/i)).toBeInTheDocument();
+    expect(screen.getByText(/Nasional Internship \/ Digital Transformation Contributor/i)).toBeInTheDocument();
     expect(screen.getByText(/Intern \/ Informatics Engineer/i)).toBeInTheDocument();
 
     // Period with Present for Denso
